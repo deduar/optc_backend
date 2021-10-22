@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::resource('fleetData',FleetDataController::class);
-
+//FleetData
 Route::post('/fleetData/process', [FleetDataController::class, 'process']);
 Route::resource('fleetData',FleetDataController::class);

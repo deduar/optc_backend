@@ -16,7 +16,7 @@ class FleetDataController extends Controller
      */
     public function index()
     {
-        return FleetData::all('id','carId');
+        return FleetData::all('id', 'carId');
     }
 
     /**
@@ -41,9 +41,9 @@ class FleetDataController extends Controller
             $fleetData = new FleetData;
             $fleetData->carId = $request->input('carId');
             $fleetData->save();
-            return response()->json(array('success'=> true, 'id'=>$fleetData->id),200);
+            return response()->json(array('success' => true, 'id' => $fleetData->id), 200);
         } catch (\Exception $e) {
-            return response()->json(array('error'=>$e),500);
+            return response()->json(array('error' => $e), 500);
         }
     }
 
@@ -93,14 +93,17 @@ class FleetDataController extends Controller
     }
 
     /**
-     * Process fleetData file to DB.
+     * Process fleetData files to DB.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function process(Request $request){
-        $key = $request->input('key');
-        return response()->json(array('key'=>$key),200);
+    public function process(Request $request)
+    {
+        if ($request->input('key') == "123") {
+            return response()->json(array('message' => 'success','key' => $request->input('key')), 200);
+        } else {
+            return response()->json(array('message' => 'fail','error' => "Incorrect key"), 500);
+        }
     }
-
 }
