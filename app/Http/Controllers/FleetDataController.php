@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FleetData;
-use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Storage;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
 class FleetDataController extends Controller
 {
@@ -101,9 +101,28 @@ class FleetDataController extends Controller
     public function process(Request $request)
     {
         if ($request->input('key') == "123") {
-            return response()->json(array('message' => 'success','key' => $request->input('key')), 200);
+            $i = 0;
+            $j = 0;
+            $k = 0;
+            $contets = Storage::get('VEHICLE2.csv');
+            $lines = explode(PHP_EOL, $contets);
+            foreach ($lines as $line) {
+                $data = explode('|', $line);
+                $fleetData = new FleetData;
+                $fleetData->carId = $data[1];
+                if ($fleetData->where('carId', '=', $data[1])->first()) {
+                    $j++;
+                } else {
+                    if($fleetData->save()){
+                        $i++;
+                    }else{
+                        $k++;
+                    }
+                }
+            }
+            return response()->json(array('success' => $i,'updated' => $j ,'failed' => $k), 200);
         } else {
-            return response()->json(array('message' => 'fail','error' => "Incorrect key"), 500);
+            return response()->json(array('message' => 'fail', 'error' => "Incorrect key"), 500);
         }
     }
 }
