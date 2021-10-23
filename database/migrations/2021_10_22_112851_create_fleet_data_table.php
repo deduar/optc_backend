@@ -22,9 +22,15 @@ class CreateFleetDataTable extends Migration
             $table->string('segment');
             $table->string('vehicle_type');
             $table->string('body_style');
-            $table->string('introduction_date');
-            $table->string('end_date');
+            $table->integer('introduction_date');
+            $table->integer('end_date');
             $table->integer('number_doors');
+            $table->integer('number_seats');
+            $table->string('fuel_type');
+            $table->integer('power_cv');
+            $table->integer('power_kw');
+            $table->string('transmision_type');
+            $table->string('model_year');
             $table->timestamps();
         });
     }

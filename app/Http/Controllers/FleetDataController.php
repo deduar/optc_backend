@@ -119,6 +119,12 @@ class FleetDataController extends Controller
                 $fleetData->introduction_date = explode("-",$data[8])[0];
                 $fleetData->end_date = explode("-",$data[9])[0];
                 $fleetData->number_doors = $data[12];
+                $fleetData->number_seats = $data[13];
+                $fleetData->fuel_type = $data[15];
+                $fleetData->power_cv = $data[17];
+                $fleetData->power_kw = $data[19];
+                $fleetData->transmision_type = $data[40];
+                $fleetData->model_year = $data[70];
                 if ($fleetData->where('carId', '=', $data[1])->first()) {
                     $j++;
                 } else {
