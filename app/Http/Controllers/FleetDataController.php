@@ -110,17 +110,27 @@ class FleetDataController extends Controller
                 $data = explode('|', $line);
                 $fleetData = new FleetData;
                 $fleetData->carId = $data[1];
+                $fleetData->make = $data[2];
+                $fleetData->model = $data[3];
+                $fleetData->description = $data[4];
+                $fleetData->segment = $data[5];
+                $fleetData->vehicle_type = $data[6];
+                $fleetData->body_style = $data[7];
+                $fleetData->introduction_date = explode("-",$data[8])[0];
+                $fleetData->end_date = explode("-",$data[9])[0];
+                $fleetData->number_doors = $data[12];
                 if ($fleetData->where('carId', '=', $data[1])->first()) {
                     $j++;
                 } else {
-                    if($fleetData->save()){
-                        $i++;
-                    }else{
+                    if($data[1] === "CARID"){
                         $k++;
+                    }else{
+                        $fleetData->save();
+                        $i++;
                     }
                 }
             }
-            return response()->json(array('success' => $i,'updated' => $j ,'failed' => $k), 200);
+            return response()->json(array('added' => $i,'updated' => $j ,'failed' => $k), 200);
         } else {
             return response()->json(array('message' => 'fail', 'error' => "Incorrect key"), 500);
         }

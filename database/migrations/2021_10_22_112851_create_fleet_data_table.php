@@ -16,6 +16,15 @@ class CreateFleetDataTable extends Migration
         Schema::create('fleet_data', function (Blueprint $table) {
             $table->id();
             $table->string('carId');
+            $table->string('make');
+            $table->string('model');
+            $table->string('description');
+            $table->string('segment');
+            $table->string('vehicle_type');
+            $table->string('body_style');
+            $table->string('introduction_date');
+            $table->string('end_date');
+            $table->integer('number_doors');
             $table->timestamps();
         });
     }
