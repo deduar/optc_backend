@@ -40,6 +40,7 @@ class FleetDataController extends Controller
         try {
             $fleetData = new FleetData;
             $fleetData->carId = $request->input('carId');
+            $fleetData->make = $request->input('make');
             $fleetData->save();
             return response()->json(array('success' => true, 'id' => $fleetData->id), 200);
         } catch (\Exception $e) {

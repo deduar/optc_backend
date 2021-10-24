@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\FleetDataController;
-use App\Models\FleetData;
+use App\Http\Controllers\VehicleTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\Process\Process;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //FleetData
 Route::post('/fleetData/process', [FleetDataController::class, 'process']);
 Route::resource('fleetData',FleetDataController::class);
+
+//Vehicle_Type
+Route::resource('vehicle_type',VehicleTypeController::class);
