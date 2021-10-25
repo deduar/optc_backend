@@ -23,7 +23,7 @@ class CreateFleetDataTable extends Migration
             $table->string('vehicle_type');
             $table->string('body_style');
             $table->integer('introduction_date');
-            $table->integer('end_date');
+            $table->integer('end_date')->nullable();
             $table->integer('number_doors');
             $table->integer('number_seats');
             $table->string('fuel_type');

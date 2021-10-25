@@ -117,8 +117,8 @@ class FleetDataController extends Controller
                 $fleetData->segment = $data[5];
                 $fleetData->vehicle_type = $data[6];
                 $fleetData->body_style = $data[7];
-                $fleetData->introduction_date = explode("-",$data[8])[0];
-                $fleetData->end_date = explode("-",$data[9])[0];
+                $fleetData->introduction_date = explode("-", $data[8])[0];
+                ($data[9] == "") ? $fleetData->end_date = "0000" : $fleetData->end_date = explode("-", $data[9])[0];
                 $fleetData->number_doors = $data[12];
                 $fleetData->number_seats = $data[13];
                 $fleetData->fuel_type = $data[15];
@@ -129,17 +129,38 @@ class FleetDataController extends Controller
                 if ($fleetData->where('carId', '=', $data[1])->first()) {
                     $j++;
                 } else {
-                    if($data[1] === "CARID"){
+                    if ($data[1] === "CARID") {
                         $k++;
-                    }else{
+                    } else {
                         $fleetData->save();
                         $i++;
                     }
                 }
             }
-            return response()->json(array('added' => $i,'updated' => $j ,'failed' => $k), 200);
+            return response()->json(array('added' => $i, 'updated' => $j, 'failed' => $k), 200);
         } else {
             return response()->json(array('message' => 'fail', 'error' => "Incorrect key"), 500);
+        }
+    }
+
+    public function test_read(Request $request)
+    {
+        $fleeData_csv = storage_path('app/VEHICLE2.csv');
+        $fp = fopen($fleeData_csv, 'r');
+        if ($fp) {
+            while (($line = fgets($fp)) !== false) {
+                // cerate new block file
+                for ($i=0; $i <10 ; $i++) {
+                    //append line to block file  -> $line = fgets($fp);
+                    echo $i."...".$line;  
+                }
+                // close block file
+                echo "--------- NEW BLOCK --------";
+            }
+            fclose($fp);
+            return response()->json(array('message' => 'test_read OK'));
+        } else {
+            return response()->json(array('message' => 'fail', 'error' => "Incorrect file"), 500);
         }
     }
 }
